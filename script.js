@@ -32,6 +32,18 @@ class Startup {
 
     return false;
   }
+
+  hire(name, title) {
+    if (!this.isValidTitle(title)) {
+      return new Error('Invalid title');
+    } else {
+      this.employees.push(new Employee(name, title));
+    }
+  }
+
+  get size() {
+    return this.employees.length;
+  }
 }
 
 const employee = new Employee('Shaggy', 'Junior Developer');
@@ -64,3 +76,9 @@ console.log(false, startup_1.isValidTitle('Designer'));
 
 console.log(true, startup_2.merger(startup_1));
 console.log(false, startup_1.merger(startup_2));
+console.log(startup_1.hire('Scooby', 'Designer'));
+console.log(startup_1);
+console.log(startup_1.hire('Scooby', 'CEO'));
+console.log(JSON.stringify(startup_1));
+startup_1.hire('Velma', 'CTO');
+console.log(startup_1.size);
