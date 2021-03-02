@@ -6,6 +6,10 @@ class Employee {
     this.#earnings = 0;
   }
 
+  get earnings() {
+    return this.#earnings;
+  }
+
   pay(amount) {
     this.#earnings += amount;
   }
@@ -44,6 +48,15 @@ class Startup {
   get size() {
     return this.employees.length;
   }
+
+  payEmployee(employee) {
+    const employeeEarning = this.salaries[employee.title];
+    if (this.funding >= employeeEarning) {
+      this.funding -= employeeEarning;
+      // debugger;
+      employee.pay(employeeEarning);
+    }
+  }
 }
 
 const employee = new Employee('Shaggy', 'Junior Developer');
@@ -76,9 +89,14 @@ console.log(false, startup_1.isValidTitle('Designer'));
 
 console.log(true, startup_2.merger(startup_1));
 console.log(false, startup_1.merger(startup_2));
-console.log(startup_1.hire('Scooby', 'Designer'));
+// console.log(startup_1.hire('Scooby', 'Designer'));
 console.log(startup_1);
-console.log(startup_1.hire('Scooby', 'CEO'));
+const ceo = new Employee('Scooby', 'CEO');
+console.log(startup_1.hire(ceo.name, ceo.title));
 console.log(JSON.stringify(startup_1));
 startup_1.hire('Velma', 'CTO');
 console.log(startup_1.size);
+startup_1.payEmployee(ceo);
+console.log(JSON.stringify(startup_1));
+console.log(JSON.stringify(ceo));
+console.log(ceo.earnings);
