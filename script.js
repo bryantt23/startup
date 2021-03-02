@@ -55,7 +55,16 @@ class Startup {
       this.funding -= employeeEarning;
       // debugger;
       employee.pay(employeeEarning);
+      return `${employee.name} was paid ${employeeEarning}`;
+    } else {
+      return new Error('Not enough funding');
     }
+  }
+
+  payDay() {
+    this.employees.forEach(employee => {
+      console.log(this.payEmployee(employee));
+    });
   }
 }
 
@@ -93,10 +102,12 @@ console.log(false, startup_1.merger(startup_2));
 console.log(startup_1);
 const ceo = new Employee('Scooby', 'CEO');
 console.log(startup_1.hire(ceo.name, ceo.title));
-console.log(JSON.stringify(startup_1));
 startup_1.hire('Velma', 'CTO');
+console.log(JSON.stringify(startup_1));
 console.log(startup_1.size);
 startup_1.payEmployee(ceo);
 console.log(JSON.stringify(startup_1));
 console.log(JSON.stringify(ceo));
 console.log(ceo.earnings);
+startup_1.payDay();
+console.log(JSON.stringify(startup_1));
