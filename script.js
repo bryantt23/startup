@@ -68,15 +68,32 @@ class Startup {
   }
 
   averageSalary() {
-    let totalSalaries = 0;
-    // this.employees.forEach(employee => {
-    //   totalSalaries += this.salaries[employee.title];
-    // });
+    return (
+      this.employees.reduce((acc, emp) => {
+        return acc + this.salaries[emp.title];
+      }, 0) / this.employees.length
+    );
+  }
 
-    totalSalaries = this.employees.reduce((acc, emp) => {
-      return acc + this.salaries[emp.title];
-    }, 0);
-    return totalSalaries / this.employees.length;
+  close() {
+    this.employees = [];
+    this.funding = 0;
+  }
+
+  acquire(startup) {
+    this.funding += startup.funding;
+    Object.entries(startup.salaries).forEach(acquiredSalary => {
+      const [title, salary] = acquiredSalary;
+      if (!Object.keys(this.salaries).includes(title)) {
+        this.salaries[title] = salary;
+      }
+    });
+
+    startup.employees.forEach(employee => {
+      this.hire(employee.name, employee.title);
+    });
+
+    startup.close();
   }
 }
 
@@ -131,4 +148,24 @@ startup_1.hire('Scooby', 'CEO');
 startup_1.hire('Velma', 'CTO');
 startup_1.hire('Daphne', 'Software Engineer');
 startup_1.hire('Fred', 'Software Engineer');
+startup_2.hire('Professor Farnsworth', 'CEO');
+startup_2.hire('Fry', 'Pilot');
 console.log(3800, startup_1.averageSalary());
+// console.log(startup_1.close());
+
+console.log(JSON.stringify(startup_1));
+console.log(JSON.stringify(startup_2));
+
+startup_1.acquire(startup_2);
+console.log(52000, startup_1.funding);
+
+console.log(`
+          "CEO"=>5000,
+          "CTO"=>4200,
+          "Software Engineer"=>3000,
+          "Junior Developer"=>2400,
+          "Pilot"=>2500
+        `);
+
+console.log(JSON.stringify(startup_1));
+console.log(JSON.stringify(startup_2));
