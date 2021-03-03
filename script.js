@@ -66,6 +66,18 @@ class Startup {
       console.log(this.payEmployee(employee));
     });
   }
+
+  averageSalary() {
+    let totalSalaries = 0;
+    // this.employees.forEach(employee => {
+    //   totalSalaries += this.salaries[employee.title];
+    // });
+
+    totalSalaries = this.employees.reduce((acc, emp) => {
+      return acc + this.salaries[emp.title];
+    }, 0);
+    return totalSalaries / this.employees.length;
+  }
 }
 
 const employee = new Employee('Shaggy', 'Junior Developer');
@@ -89,6 +101,8 @@ salaries = {
   Pilot: 2500
 };
 const startup_2 = new Startup('Planet Express', 30000, salaries);
+
+/*
 console.log(startup_2);
 
 console.log(true, startup_1.isValidTitle('CTO'));
@@ -111,3 +125,10 @@ console.log(JSON.stringify(ceo));
 console.log(ceo.earnings);
 startup_1.payDay();
 console.log(JSON.stringify(startup_1));
+*/
+
+startup_1.hire('Scooby', 'CEO');
+startup_1.hire('Velma', 'CTO');
+startup_1.hire('Daphne', 'Software Engineer');
+startup_1.hire('Fred', 'Software Engineer');
+console.log(3800, startup_1.averageSalary());
